@@ -43,7 +43,7 @@ public class keywordChecker extends Parent {
             candleIdent.setHigh(high);
             candleIdent.setLow(low);
             candleIdent.setTime(time);
-            
+            candleIdent.SearchTypeCandle();
             
            TrendIdentifiers trend = new TrendIdentifiers();
             trend.findTrend(keyword[1].toUpperCase());

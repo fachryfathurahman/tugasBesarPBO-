@@ -43,6 +43,7 @@ public class CandlePrice extends Parent {
             
             Timestamp ts = new Timestamp(candlesticks.get(i).getOpenTime());
             time[i]=ts;
+
             
         }
         

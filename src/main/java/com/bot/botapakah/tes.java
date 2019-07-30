@@ -19,7 +19,7 @@ public class tes {
     public static void main (String []args){
       keywordChecker cek = new keywordChecker("/analisis TRXETH");
       cek.cekKeyword();
-      cek.cekKeyword();
+
         
       
     }

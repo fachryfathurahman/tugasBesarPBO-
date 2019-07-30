@@ -21,8 +21,14 @@ public class CandleIdentifiers extends Parent {
     public void SearchTypeCandle(){
         typeCandle=new String[open.length];
         for(int x=0;x<open.length;x++){
-            
+            if(open[x]>close[x]){
+                typeCandle[x]="black candle";
+            }
+            else if (open[x]<close[x]){
+                typeCandle[x]="white candle";
+            }
         }
+
     }
 
     public String[] getTypeCandle() {
