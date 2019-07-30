@@ -13,12 +13,13 @@ import java.sql.Timestamp;
  */
 public class CandleIdentifiers extends Parent {
     private String typeCandle [];
-
+    private double mlt=1.3;
     
 
     
     
     public void SearchTypeCandle(){
+        typeCandle=new String[open.length];
         for(int x=0;x<open.length;x++){
             
         }

@@ -20,16 +20,17 @@ import java.util.List;
  */
 public class CandlePrice extends Parent {
 
-    String price;
-    long serverTime, startServerTime;
+    private String price;
+    private long serverTime, startServerTime;
+    private List<Candlestick> candlesticks;
 
     public void findPrice(String symbol) {
         BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
         BinanceApiRestClient client = factory.newRestClient();
         serverTime = client.getServerTime();
         startServerTime = serverTime - 604800000;
-        
-        List<Candlestick> candlesticks = client.getCandlestickBars(symbol, CandlestickInterval.DAILY, 50, startServerTime, serverTime);
+
+       candlesticks = client.getCandlestickBars(symbol, CandlestickInterval.DAILY, 50, startServerTime, serverTime);
         
         
         
@@ -47,6 +48,5 @@ public class CandlePrice extends Parent {
         
 
     }
-
 
 }
