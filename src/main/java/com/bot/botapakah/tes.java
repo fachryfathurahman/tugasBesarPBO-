@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class tes {
     public static void main (String []args){
-      keywordChecker cek = new keywordChecker("/analisis TRXETH");
+      keywordChecker cek = new keywordChecker("/analisis BNBBTC");
       cek.cekKeyword();
 
         

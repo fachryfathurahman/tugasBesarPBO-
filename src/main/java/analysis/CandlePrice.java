@@ -27,12 +27,13 @@ public class CandlePrice extends Parent {
     public void findPrice(String symbol) {
         BinanceApiClientFactory factory = BinanceApiClientFactory.newInstance();
         BinanceApiRestClient client = factory.newRestClient();
+
         serverTime = client.getServerTime();
         startServerTime = serverTime - 604800000;
 
        candlesticks = client.getCandlestickBars(symbol, CandlestickInterval.DAILY, 50, startServerTime, serverTime);
-        
-        
+
+
         
         this.setRange(candlesticks.size());
         for (int i = 0; i < candlesticks.size(); i++) {
@@ -40,7 +41,7 @@ public class CandlePrice extends Parent {
             close[i] = Double.parseDouble(candlesticks.get(i).getClose());
             high[i] = Double.parseDouble(candlesticks.get(i).getHigh());
             low[i] = Double.parseDouble(candlesticks.get(i).getLow());
-            
+            System.out.println(client.getAllPrices().get(i).getSymbol());
             Timestamp ts = new Timestamp(candlesticks.get(i).getOpenTime());
             time[i]=ts;
 

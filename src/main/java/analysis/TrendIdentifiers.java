@@ -59,7 +59,7 @@ public class TrendIdentifiers extends Parent {
            
         }
     }
-    public String[] trend(){
+    public String[] getTrend(){
         return trend;
     }
 }

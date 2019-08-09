@@ -14,9 +14,9 @@ import com.binance.api.client.domain.market.TickerPrice;
  * @author fachry
  */
 public class keywordChecker extends Parent {
-    private String[] keyword;
+    private String[] keyword,typecandle,trend;
     private String jawaban;
-    
+
     
     
     
@@ -44,9 +44,12 @@ public class keywordChecker extends Parent {
             candleIdent.setLow(low);
             candleIdent.setTime(time);
             candleIdent.SearchTypeCandle();
-            
+            this.typecandle=candleIdent.getTypeCandle();
+
+
            TrendIdentifiers trend = new TrendIdentifiers();
             trend.findTrend(keyword[1].toUpperCase());
+            this.trend=trend.getTrend();
         }
         
     }
