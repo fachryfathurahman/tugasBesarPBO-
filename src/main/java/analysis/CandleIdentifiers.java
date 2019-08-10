@@ -18,7 +18,7 @@ public class CandleIdentifiers extends Parent {
     private String typeCandle [];
     private double[] candleBody,upperShadow,lowerShadow;
     private final double MLT=1.3;
-    private double averageCandleBody,sum=0;
+    private double averageCandleBody,sum=0,cmed,cshort,cvshort;
     
     
     public void SearchTypeCandle(){
@@ -48,19 +48,52 @@ public class CandleIdentifiers extends Parent {
         }
 
         averageCandleBody=sum/open.length;
+        cvshort=(1/MLT)*(1/MLT)*averageCandleBody;
+        cshort=(1/MLT)*averageCandleBody;
+        cmed=MLT*averageCandleBody;
 
         for(int x=0;x<open.length;x++){
             if(open[x]>close[x]){
-                if(candleBody[x]>=(MLT*averageCandleBody)&&upperShadow[x]<(1/MLT*averageCandleBody)&&
-                        lowerShadow[x]<(1/MLT*averageCandleBody)&&upperShadow[x]!=0&&lowerShadow[x]!=0){
+                if((candleBody[x] >= cmed) && (upperShadow[x] < cshort) &&
+                        (lowerShadow[x] < cshort) && (upperShadow[x] != 0) && (lowerShadow[x] != 0)){
                     typeCandle[x]="long black candle";
                 }
-                else if((upperShadow[x]==0||lowerShadow[x]==0)&&candleBody[x]>(MLT*averageCandleBody)){
+                else if(((upperShadow[x] == 0) || (lowerShadow[x] == 0)) && (candleBody[x] > cmed)){
                     typeCandle[x]="black marubozu";
                 }
-                else if(candleBody[x]>=((1/MLT)*(1/MLT)*averageCandleBody)&&candleBody[x]<(1/MLT)*averageCandleBody&&
-                            upperShadow[x]>candleBody[x]&&lowerShadow[x]>candleBody[x]){
+                else if((candleBody[x] >= cvshort) && (candleBody[x] < cshort) &&
+                        (upperShadow[x] > candleBody[x]) && (lowerShadow[x] > candleBody[x])){
                     typeCandle[x]="Spinning top";
+                }
+                else if((candleBody[x] >= cvshort) && (candleBody[x] < cshort) &&
+                        ((upperShadow[x] < cvshort) || (upperShadow[x] == 0)) &&
+                        ((lowerShadow[x] >= cmed) || ((lowerShadow[x] >= cshort) &&
+                                (lowerShadow[x] < cmed)))){
+                    typeCandle[x]="hammer";
+
+                }
+                else if ((candleBody[x]==0||candleBody[x]<cvshort)){
+                            if(((upperShadow[x] == 0) || ((upperShadow[x] < cvshort) &&
+                                    ((lowerShadow[x] == 0) || (lowerShadow[x] < cvshort))))) {
+                                    typeCandle[x]="four price doji";
+                            }
+                            else if( (open[x] != close[x]) && ((upperShadow[x] == 0) || (upperShadow[x] < cvshort))
+                                    && ((lowerShadow[x] >= cmed) || ((lowerShadow[x] >= cshort) &&
+                                    (lowerShadow[x] < cmed)))){
+                                    typeCandle[x]="dragonfly doji";
+                            }
+                            else if((open[x] != close[x]) && ((upperShadow[x] >= cmed) ||
+                                    ((upperShadow[x] >= cshort) && (upperShadow[x] < cmed))) &&
+                                    ((lowerShadow[x] >= cmed) ||
+                                            ((lowerShadow[x] >= cshort) && (lowerShadow[x] < cmed)))){
+                                    typeCandle[x]="long legged doji";
+                            }
+                            else if( (open[x] != close[x]) && ((lowerShadow[x] == 0) || (lowerShadow[x] < cvshort))
+                                    && ((upperShadow[x] >= cmed) || ((upperShadow[x] >= cshort) &&
+                                    (upperShadow[x] < cmed)))){
+                                typeCandle[x]="gravestone doji";
+                            }
+
                 }
                 else{
                     typeCandle[x]="black candle";
@@ -75,9 +108,39 @@ public class CandleIdentifiers extends Parent {
                     typeCandle[x]="white marubozu";
                 }
 
-                else if(candleBody[x]>=((1/MLT)*(1/MLT)*averageCandleBody)&&candleBody[x]<(1/MLT)*averageCandleBody&&
+                else if(candleBody[x]>=cvshort && candleBody[x]<cshort &&
                         upperShadow[x]>candleBody[x]&&lowerShadow[x]>candleBody[x]){
                     typeCandle[x]="Spinning top";
+                }
+                else if(candleBody[x]>=cvshort && candleBody[x]<cshort &&
+                        (upperShadow[x]<cvshort || upperShadow[x]==0) &&
+                        ((lowerShadow[x]>=cmed)||((lowerShadow[x]>=cshort) &&
+                                lowerShadow[x]<cmed))){
+                    typeCandle[x]="hammer";
+
+                }
+                else if ((candleBody[x]==0||candleBody[x]<cvshort)){
+                    if(((upperShadow[x] == 0) || ((upperShadow[x] < cvshort) &&
+                            ((lowerShadow[x] == 0) || (lowerShadow[x] < cvshort))))) {
+                        typeCandle[x]="four price doji";
+                    }
+                    else if( (open[x] != close[x]) && ((upperShadow[x] == 0) || (upperShadow[x] < cvshort))
+                            && ((lowerShadow[x] >= cmed) || ((lowerShadow[x] >= cshort) &&
+                            (lowerShadow[x] < cmed)))){
+                        typeCandle[x]="dragonfly doji";
+                    }
+                    else if((open[x] != close[x]) && ((upperShadow[x] >= cmed) ||
+                            ((upperShadow[x] >= cshort) && (upperShadow[x] < cmed))) &&
+                            ((lowerShadow[x] >= cmed) ||
+                                    ((lowerShadow[x] >= cshort) && (lowerShadow[x] < cmed)))){
+                        typeCandle[x]="long legged doji";
+                    }
+                    else if( (open[x] != close[x]) && ((lowerShadow[x] == 0) || (lowerShadow[x] < cvshort))
+                            && ((upperShadow[x] >= cmed) || ((upperShadow[x] >= cshort) &&
+                            (upperShadow[x] < cmed)))){
+                        typeCandle[x]="gravestone doji";
+                    }
+
                 }
                 else{
                     typeCandle[x]="white candle";

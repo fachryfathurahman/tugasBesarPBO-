@@ -36,7 +36,7 @@ public class keywordChecker extends Parent {
             this.close=candle.getClose();
             this.low=candle.getLow();
             this.time=candle.getTime();
-            
+            jawaban=candle.getJaw();
             CandleIdentifiers candleIdent = new CandleIdentifiers();
             candleIdent.setOpen(open);
             candleIdent.setClose(close);

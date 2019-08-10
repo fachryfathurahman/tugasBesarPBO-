@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class CandlePrice extends Parent {
 
-    private String price;
+    private String price,jaw="";
     private long serverTime, startServerTime;
     private List<Candlestick> candlesticks;
 
@@ -33,15 +33,18 @@ public class CandlePrice extends Parent {
 
        candlesticks = client.getCandlestickBars(symbol, CandlestickInterval.DAILY, 50, startServerTime, serverTime);
 
-
-        
+//        System.out.println(client.getAll24HrPriceStatistics().get(0).getPriceChangePercent());
+//        System.out.println(client.getAllPrices().size());
+        for(int i=0;i<client.getAllPrices().size();i++){
+            jaw+=client.getAllPrices().get(i).getSymbol();
+        }
         this.setRange(candlesticks.size());
         for (int i = 0; i < candlesticks.size(); i++) {
             open[i] = Double.parseDouble(candlesticks.get(i).getOpen());
             close[i] = Double.parseDouble(candlesticks.get(i).getClose());
             high[i] = Double.parseDouble(candlesticks.get(i).getHigh());
             low[i] = Double.parseDouble(candlesticks.get(i).getLow());
-            System.out.println(client.getAllPrices().get(i).getSymbol());
+
             Timestamp ts = new Timestamp(candlesticks.get(i).getOpenTime());
             time[i]=ts;
 
@@ -49,6 +52,9 @@ public class CandlePrice extends Parent {
         }
         
 
+    }
+    public String getJaw(){
+        return jaw;
     }
 
 }
