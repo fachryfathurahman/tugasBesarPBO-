@@ -35,8 +35,8 @@ public class CandlePrice extends Parent {
 
 //        System.out.println(client.getAll24HrPriceStatistics().get(0).getPriceChangePercent());
 //        System.out.println(client.getAllPrices().size());
-        for(int i=0;i<5;i++){
-            jaw+=client.getAllPrices().get(i).getSymbol();
+        for(int i=0;i<50;i++){
+            jaw+=client.getAllPrices().get(i).getSymbol()+"\n";
         }
         this.setRange(candlesticks.size());
         for (int i = 0; i < candlesticks.size(); i++) {
